@@ -1,73 +1,80 @@
-import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
+import { Button } from "../ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "../ui/dialog";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { Input } from "../ui/input";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+} from "../ui/select";
 import { genres } from "@/constant/genre";
-import { useCreateBookMutation } from "@/redux/api/baseApi";
-import { DialogDescription } from "@radix-ui/react-dialog";
-import { useState } from "react";
-import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { Textarea } from "../ui/textarea";
+import type { Book } from "@/types/books";
 
-const AddBook = () => {
-  const [createBook] = useCreateBookMutation();
+interface EditBookModalProps {
+  book: Book;
+  trigger?: React.ReactNode;
+}
+
+const EditBookModal = ({ book, trigger }: EditBookModalProps) => {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      title: book.title,
+      author: book.author,
+      genre: book.genre,
+      isbn: book.isbn,
+      description: book.description || "",
+      copies: book.copies,
+    },
+  });
+
+  useEffect(() => {
+    if (open && book) {
+      form.reset({
+        title: book.title,
+        author: book.author,
+        genre: book.genre,
+        isbn: book.isbn,
+        description: book.description || "",
+        copies: book.copies,
+      });
+    }
+  }, [open, book, form]);
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      data.copies = Number(data.copies);
-
-      const taskData = {
-        ...data,
-        available: true,
-      };
-      await createBook(taskData).unwrap();
-      setOpen(false);
-      form.reset();
-      // Optionally reset form or show success message
-      console.log("Book created:", taskData);
-      navigate("/all-books");
+      console.log("Edit data:", data);
+      console.log("Original book ID:", book._id);
     } catch (error) {
-      console.error("Failed to create book", error);
+      console.error("Failed to update book", error);
     }
   };
-
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
         <DialogTrigger asChild>
-          <Button variant="outline">Add Book</Button>
+          {trigger || <Button variant="outline">Edit Book</Button>}
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add book</DialogTitle>
+            <DialogTitle>Edit book</DialogTitle>
           </DialogHeader>
           <DialogDescription className="sr-only">
-            Addfsda sdafasdfsdf
+            Edit book details
           </DialogDescription>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -78,9 +85,8 @@ const AddBook = () => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Title</FormLabel>
-                    <FormLabel />
                     <FormControl>
-                      <Input {...field} value={field.value || ""} />
+                      <Input {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -93,7 +99,7 @@ const AddBook = () => {
                   <FormItem>
                     <FormLabel>Author</FormLabel>
                     <FormControl>
-                      <Input {...field} value={field.value || ""} />
+                      <Input {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -105,13 +111,10 @@ const AddBook = () => {
                 render={({ field }) => (
                   <FormItem className="w-full">
                     <FormLabel>Genre</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value || ""}
-                    >
+                    <Select onValueChange={field.onChange} value={field.value}>
                       <FormControl>
                         <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select a verified email to display" />
+                          <SelectValue placeholder="Select a genre" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -133,7 +136,7 @@ const AddBook = () => {
                   <FormItem>
                     <FormLabel>ISBN</FormLabel>
                     <FormControl>
-                      <Input {...field} value={field.value || ""} />
+                      <Input {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -146,11 +149,7 @@ const AddBook = () => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea
-                        className="resize-none"
-                        {...field}
-                        value={field.value || ""}
-                      />
+                      <Textarea className="resize-none" {...field} />
                     </FormControl>
                   </FormItem>
                 )}
@@ -166,8 +165,8 @@ const AddBook = () => {
                       <Input
                         {...field}
                         type="number"
-                        value={field.value || ""}
                         min={1}
+                        onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
                   </FormItem>
@@ -187,4 +186,4 @@ const AddBook = () => {
   );
 };
 
-export default AddBook;
+export default EditBookModal;

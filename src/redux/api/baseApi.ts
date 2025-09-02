@@ -9,6 +9,14 @@ export const baseApi = createApi({
       query: () => "/books",
       providesTags: ["books"],
     }),
+    createBook: builder.mutation({
+      query: (taskData) => ({
+        url: "/books",
+        method: "POST",
+        body: taskData,
+      }),
+      invalidatesTags: ["books"],
+    }),
     deleteBooks: builder.mutation({
       query: (ids: string[]) => ({
         url: "/books",
@@ -20,4 +28,8 @@ export const baseApi = createApi({
   }),
 });
 
-export const { useGetBooksQuery, useDeleteBooksMutation } = baseApi;
+export const {
+  useGetBooksQuery,
+  useDeleteBooksMutation,
+  useCreateBookMutation,
+} = baseApi;

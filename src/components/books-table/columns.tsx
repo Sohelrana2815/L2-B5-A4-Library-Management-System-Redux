@@ -1,8 +1,8 @@
 import type { Book } from "@/types/books";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "../ui/checkbox";
-
-
+import { Button } from "../ui/button";
+import EditBookModal from "./EditBookModal";
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -23,7 +23,7 @@ export const columns: ColumnDef<Book>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
-      />
+      />       
     ),
     enableSorting: false,
     enableHiding: false,
@@ -56,5 +56,18 @@ export const columns: ColumnDef<Book>[] = [
       return <div>{isAvailable ? "Available" : "Unavailable"}</div>;
     },
   },
-];
 
+  {
+    header: "Edit",
+    cell: ({ row }) => {
+      const book = row.original;
+
+      return (
+        <EditBookModal
+          book={book}
+          trigger={<Button variant={"outline"}>Edit</Button>}
+        />
+      );
+    },
+  },
+];
