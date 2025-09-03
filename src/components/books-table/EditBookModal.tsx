@@ -23,6 +23,7 @@ import {
 import { genres } from "@/constant/genre";
 import { Textarea } from "../ui/textarea";
 import type { Book } from "@/types/books";
+import { useUpdateBookMutation } from "@/redux/api/baseApi";
 
 interface EditBookModalProps {
   book: Book;
@@ -30,7 +31,9 @@ interface EditBookModalProps {
 }
 
 const EditBookModal = ({ book, trigger }: EditBookModalProps) => {
+  const [updateBook] = useUpdateBookMutation();
   const [open, setOpen] = useState(false);
+
   const form = useForm({
     defaultValues: {
       title: book.title,
@@ -57,8 +60,15 @@ const EditBookModal = ({ book, trigger }: EditBookModalProps) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      console.log("Edit data:", data);
-      console.log("Original book ID:", book._id);
+      data.copies = Number(data.copies);
+
+      await updateBook({
+        bookId: book._id,
+        bookData: data as Book,
+      }).unwrap();
+
+      console.log("Book updated successfully");
+      setOpen(false); // Close modal on success
     } catch (error) {
       console.error("Failed to update book", error);
     }
@@ -165,7 +175,7 @@ const EditBookModal = ({ book, trigger }: EditBookModalProps) => {
                       <Input
                         {...field}
                         type="number"
-                        min={1}
+                        min={0}
                         onChange={(e) => field.onChange(Number(e.target.value))}
                       />
                     </FormControl>
