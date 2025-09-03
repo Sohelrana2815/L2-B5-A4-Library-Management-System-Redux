@@ -2,7 +2,8 @@ import type { Book } from "@/types/books";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
-import EditBookModal from "./EditBookModal";
+import EditBookModal from "../dialogs/EditBookModal";
+import BorrowBookModal from "../dialogs/BorrowBookModal";
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -66,6 +67,19 @@ export const columns: ColumnDef<Book>[] = [
         <EditBookModal
           book={book}
           trigger={<Button variant={"outline"}>Edit</Button>}
+        />
+      );
+    },
+  },
+  {
+    header: "Borrow",
+    cell: ({ row }) => {
+      const book = row.original;
+
+      return (
+        <BorrowBookModal
+          book={book}
+          trigger={<Button variant={"outline"}>Borrow book</Button>}
         />
       );
     },
