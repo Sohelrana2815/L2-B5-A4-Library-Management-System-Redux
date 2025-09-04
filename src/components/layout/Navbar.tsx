@@ -38,6 +38,14 @@ const Navbar = () => {
                 Add Book
               </Link>
             </li>
+            <li>
+              <Link
+                to="/borrow-summery"
+                className="text-[#F9F6F3] hover:text-[#A6B28B] font-medium transition"
+              >
+                Borrow Summery
+              </Link>
+            </li>
             {/* Add more links as needed */}
           </ul>
         </div>

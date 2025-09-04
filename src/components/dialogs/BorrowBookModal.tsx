@@ -60,7 +60,7 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
     try {
       await borrowBook(borrowData).unwrap();
       setOpen(false);
-      navigate("/summery");
+      navigate("/borrow-summery");
     } catch (error) {
       console.error("Failed to borrow book:", error);
     }
