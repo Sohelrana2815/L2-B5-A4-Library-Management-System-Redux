@@ -34,15 +34,17 @@ const Books = () => {
   }
 
   return (
-    <div>
-      <Toolbar selectedCount={selectedBooks.length} onDelete={handleDelete} />
-      <DataTable
-        selectedBooks={selectedBooks}
-        setSelectedBooks={setSelectedBooks}
-        columns={columns}
-        data={books}
-      />
-    </div>
+    <>
+      <div>
+        <Toolbar selectedCount={selectedBooks.length} onDelete={handleDelete} />
+        <DataTable
+          selectedBooks={selectedBooks}
+          setSelectedBooks={setSelectedBooks}
+          columns={columns}
+          data={books}
+        />
+      </div>
+    </>
   );
 };
 

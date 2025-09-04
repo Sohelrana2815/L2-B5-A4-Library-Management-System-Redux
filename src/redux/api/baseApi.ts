@@ -1,6 +1,10 @@
 import type { Book } from "@/types/books";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/api" }),
@@ -11,6 +15,12 @@ export const baseApi = createApi({
       providesTags: ["books"],
     }),
 
+    // Add this new endpoint for single book with proper response handling
+    getBookById: builder.query<Book, string>({
+      query: (id) => `/books/${id}`,
+      transformResponse: (response: ApiResponse<Book>) => response.data,
+      providesTags: (result, error, id) => [{ type: "books", id }],
+    }),
     createBook: builder.mutation({
       query: (taskData) => ({
         url: "/books",
@@ -61,4 +71,5 @@ export const {
   useUpdateBookMutation,
   useBorrowBookMutation,
   useGetBorrowSummeryQuery,
+  useGetBookByIdQuery,
 } = baseApi;

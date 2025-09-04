@@ -4,6 +4,7 @@ import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
 import EditBookModal from "../dialogs/EditBookModal";
 import BorrowBookModal from "../dialogs/BorrowBookModal";
+import { useNavigate } from "react-router";
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -82,6 +83,29 @@ export const columns: ColumnDef<Book>[] = [
           trigger={<Button variant={"outline"}>Borrow book</Button>}
         />
       );
+    },
+  },
+
+  {
+    header: "Details",
+    cell: ({ row }) => {
+      const book = row.original;
+
+      const DetailsButton = () => {
+        const navigate = useNavigate();
+
+        const handleDetailsClick = () => {
+          navigate(`/book-details/${book._id}`); // Use _id instead of id
+        };
+
+        return (
+          <Button variant={"outline"} onClick={handleDetailsClick}>
+            Details
+          </Button>
+        );
+      };
+
+      return <DetailsButton />;
     },
   },
 ];

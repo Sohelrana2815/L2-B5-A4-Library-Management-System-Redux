@@ -19,14 +19,6 @@ const Navbar = () => {
                 to="/"
                 className="text-[#F9F6F3] hover:text-[#A6B28B] font-medium transition"
               >
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/all-books"
-                className="text-[#F9F6F3] hover:text-[#A6B28B] font-medium transition"
-              >
                 All Books
               </Link>
             </li>
