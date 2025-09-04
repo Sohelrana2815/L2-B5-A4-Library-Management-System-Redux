@@ -6,7 +6,7 @@ import {
 import { DataTable } from "@/components/books-table/data-table";
 import Toolbar from "@/components/toolbar/Toolbar";
 import { useState } from "react";
-
+import toast, { Toaster } from "react-hot-toast";
 const Books = () => {
   const { data: response, isError, isLoading } = useGetBooksQuery(undefined);
   const books = response?.data || [];
@@ -18,6 +18,7 @@ const Books = () => {
     try {
       await deleteBooks(selectedBooks).unwrap();
       setSelectedBooks([]);
+      toast.success(`${selectedBooks.length} Book deleted successfully`);
       console.log("Book deleted successfully");
     } catch (error) {
       console.error("Failed to delete book", error);
@@ -44,6 +45,7 @@ const Books = () => {
           data={books}
         />
       </div>
+      <Toaster />
     </>
   );
 };
