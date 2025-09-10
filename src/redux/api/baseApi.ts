@@ -54,7 +54,7 @@ export const baseApi = createApi({
         method: "POST",
         body: borrowData,
       }),
-      invalidatesTags: ["books"],
+      invalidatesTags: ["books", "borrow"],
     }),
 
     getBorrowSummery: builder.query({

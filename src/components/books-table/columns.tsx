@@ -6,6 +6,8 @@ import EditBookModal from "../dialogs/EditBookModal";
 import BorrowBookModal from "../dialogs/BorrowBookModal";
 import { useNavigate } from "react-router";
 
+
+
 export const columns: ColumnDef<Book>[] = [
   {
     id: "select",
@@ -72,6 +74,8 @@ export const columns: ColumnDef<Book>[] = [
       );
     },
   },
+
+  
   {
     header: "Borrow",
     cell: ({ row }) => {
@@ -80,7 +84,7 @@ export const columns: ColumnDef<Book>[] = [
       return (
         <BorrowBookModal
           book={book}
-          trigger={<Button variant={"outline"}>Borrow book</Button>}
+          trigger={<Button variant={"outline"}>Borrow</Button>}
         />
       );
     },
