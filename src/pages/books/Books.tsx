@@ -13,6 +13,7 @@ import EmailForm from "@/components/sections/emailForm/EmailForm";
 import { Button } from "@/components/ui/button";
 import Categories from "@/components/sections/bookCategory/Categories";
 import BannerCarousel from "@/components/sections/banner/BannerCarousel";
+import ReadDown from "@/components/sections/ReadDown/ReadDown";
 const Books = () => {
   const { data: response, isError, isLoading } = useGetBooksQuery(undefined);
   const books = response?.data || [];
@@ -42,19 +43,17 @@ const Books = () => {
 
   return (
     <>
-      <div>
-        <BannerCarousel />
-        <div className="mt-56 mb-10">
-          <SectionTitle title="Discover Your Next Book" />
-        </div>
-        <Toolbar selectedCount={selectedBooks.length} onDelete={handleDelete} />
-        <DataTable
-          selectedBooks={selectedBooks}
-          setSelectedBooks={setSelectedBooks}
-          columns={columns}
-          data={books}
-        />
+      <BannerCarousel />
+      <div className="mt-56 mb-10">
+        <SectionTitle title="Discover Your Next Book" />
       </div>
+      <Toolbar selectedCount={selectedBooks.length} onDelete={handleDelete} />
+      <DataTable
+        selectedBooks={selectedBooks}
+        setSelectedBooks={setSelectedBooks}
+        columns={columns}
+        data={books}
+      />
 
       <div className="w-full flex my-20">
         <Button
@@ -72,6 +71,7 @@ const Books = () => {
       </div>
 
       <Categories />
+      <ReadDown />
       <Toaster />
     </>
   );
