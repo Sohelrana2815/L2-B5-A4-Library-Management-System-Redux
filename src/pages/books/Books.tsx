@@ -1,4 +1,5 @@
 import { columns } from "@/components/books-table/columns";
+
 import {
   useDeleteBooksMutation,
   useGetBooksQuery,
@@ -7,6 +8,11 @@ import { DataTable } from "@/components/books-table/data-table";
 import Toolbar from "@/components/toolbar/Toolbar";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import SectionTitle from "@/components/sections/sectionTitle/SectionTitle";
+import EmailForm from "@/components/sections/emailForm/EmailForm";
+import { Button } from "@/components/ui/button";
+import Categories from "@/components/sections/bookCategory/Categories";
+import BannerCarousel from "@/components/sections/banner/BannerCarousel";
 const Books = () => {
   const { data: response, isError, isLoading } = useGetBooksQuery(undefined);
   const books = response?.data || [];
@@ -37,6 +43,10 @@ const Books = () => {
   return (
     <>
       <div>
+        <BannerCarousel />
+        <div className="mt-56 mb-10">
+          <SectionTitle title="Discover Your Next Book" />
+        </div>
         <Toolbar selectedCount={selectedBooks.length} onDelete={handleDelete} />
         <DataTable
           selectedBooks={selectedBooks}
@@ -45,6 +55,23 @@ const Books = () => {
           data={books}
         />
       </div>
+
+      <div className="w-full flex my-20">
+        <Button
+          className="bg-black dark:bg-green-900 mx-auto text-white rounded-none "
+          size={"lg"}
+        >
+          Discover More Books
+        </Button>
+      </div>
+
+      <EmailForm />
+
+      <div className="mt-20">
+        <SectionTitle title="Choose Your Book!" />
+      </div>
+
+      <Categories />
       <Toaster />
     </>
   );
