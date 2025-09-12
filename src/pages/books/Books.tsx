@@ -14,6 +14,10 @@ import { Button } from "@/components/ui/button";
 import Categories from "@/components/sections/bookCategory/Categories";
 import BannerCarousel from "@/components/sections/banner/BannerCarousel";
 import ReadDown from "@/components/sections/ReadDown/ReadDown";
+import ReaderChoice from "@/components/sections/readerChoice/ReaderChoice";
+import Banner from "@/components/sections/banner2/Banner";
+import PopularAuthors from "@/components/sections/popularAuthors/PopularAuthors";
+import Banner3 from "@/components/sections/banner3/Banner3";
 const Books = () => {
   const { data: response, isError, isLoading } = useGetBooksQuery(undefined);
   const books = response?.data || [];
@@ -72,6 +76,10 @@ const Books = () => {
 
       <Categories />
       <ReadDown />
+      <ReaderChoice />
+      <Banner />
+      <PopularAuthors />
+      <Banner3 />
       <Toaster />
     </>
   );
