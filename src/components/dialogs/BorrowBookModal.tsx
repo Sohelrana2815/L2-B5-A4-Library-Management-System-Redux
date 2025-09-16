@@ -46,21 +46,24 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
 
   const form = useForm<Borrow>({
     defaultValues: {
-      book: book._id,
-      quantity: 1,
+      book: {
+        title: book.title,
+        isbn: book.isbn,
+      },
+      totalQuantity: 1,
       dueDate: new Date(),
     },
   });
   const onSubmit: SubmitHandler<Borrow> = async (data) => {
     const borrowData = {
       book: book._id,
-      quantity: Number(data.quantity),
+      quantity: Number(data.totalQuantity),
       dueDate: data.dueDate.toISOString(),
     };
 
     try {
       await borrowBook(borrowData).unwrap();
-      toast.success("Book borrowed successfully");
+      toast.success(`Book "${book.title}" borrowed successfully!`);
       setOpen(false);
       form.reset();
       setTimeout(() => {
@@ -79,7 +82,7 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
-            <DialogTitle>Add book</DialogTitle>
+            <DialogTitle>Borrow books</DialogTitle>
           </DialogHeader>
           <DialogDescription className="sr-only">
             Addfsda sdafasdfsdf
@@ -89,7 +92,7 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
               {/* Quantity */}
               <FormField
                 control={form.control}
-                name="quantity"
+                name="totalQuantity"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Quantity</FormLabel>

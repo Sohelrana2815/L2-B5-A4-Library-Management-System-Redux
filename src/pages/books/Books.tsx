@@ -46,7 +46,9 @@ const Books = () => {
   if (isError) {
     return <div>Error fetching books</div>;
   }
-
+  if (books.length === 0) {
+    return <div>No Books Available</div>;
+  }
   return (
     <>
       <Banner1 />
