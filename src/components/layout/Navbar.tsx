@@ -13,7 +13,7 @@ const Navbar = () => {
             to="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <img src="/nav-logo.png" className="h-12" alt="Flowbite Logo" />
+            <img src="/nav-logo.webp" className="h-12" alt="Flowbite Logo" />
             <span className="self-center  pb-2 text-2xl font-semibold whitespace-nowrap dark:text-[#4E9F3D]">
               Aura Books
             </span>

@@ -1,4 +1,4 @@
-import bannerImg from "/banner2.jpg";
+import bannerImg from "/banner2.webp";
 
 const Banner2 = () => {
   return (

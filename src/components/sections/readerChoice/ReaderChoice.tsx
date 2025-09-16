@@ -5,9 +5,9 @@ import { ArrowRight } from "lucide-react";
 import "./book-cover.css";
 import type { Borrow } from "@/types/borrow";
 const bookCoverImages = [
-  "/book-covers/book-cover1.jpg",
-  "/book-covers/book-cover2.jpg",
-  "/book-covers/book-cover3.jpg",
+  "/book-covers/book-cover1.webp",
+  "/book-covers/book-cover2.webp",
+  "/book-covers/book-cover3.webp",
 ];
 const ReaderChoice = () => {
   const {

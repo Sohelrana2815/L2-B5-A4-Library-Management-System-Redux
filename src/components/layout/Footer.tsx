@@ -10,7 +10,7 @@ const Footer = () => {
           <div className="mb-6 md:mb-0">
             <a className="flex items-center">
               <img
-                src="/nav-logo.png"
+                src="/nav-logo.webp"
                 className="h-8 me-3"
                 alt="FlowBite Logo"
               />

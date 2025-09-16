@@ -5,25 +5,25 @@ const authors = [
   {
     id: 1,
     name: "Amy Stevens",
-    image: "/authors/author1.jpg",
+    image: "/authors/author1.webp",
     title: "author",
   },
   {
     id: 2,
     name: "Steven Moore",
-    image: "/authors/author2.jpg",
+    image: "/authors/author2.webp",
     title: "author",
   },
   {
     id: 3,
     name: "Jenny Sanders",
-    image: "/authors/author3.jpg",
+    image: "/authors/author3.webp",
     title: "author",
   },
   {
     id: 4,
     name: "Andrew Woods",
-    image: "/authors/author4.jpg",
+    image: "/authors/author4.webp",
     title: "editor",
   },
 ];
