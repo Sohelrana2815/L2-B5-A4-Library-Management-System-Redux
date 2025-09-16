@@ -4,7 +4,7 @@ const Banner3 = () => {
       <section
         className="relative bg-cover bg-center min-h-[500px] md:min-h-[60vh] flex items-center justify-center my-16 rounded-3xl"
         style={{
-          backgroundImage: `url('/reading-book-banner/reading-book.jpg')`,
+          backgroundImage: `url('/reading-book-banner/reading-book.webp')`,
         }}
         role="region"
         aria-label="Simple reading banner"
