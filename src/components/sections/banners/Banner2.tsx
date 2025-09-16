@@ -1,6 +1,6 @@
 import bannerImg from "/banner2.jpg";
 
-const Banner = () => {
+const Banner2 = () => {
   return (
     <section
       className="relative bg-cover bg-center min-h-[500px] md:min-h-[60vh] flex items-center my-56"
@@ -31,4 +31,4 @@ const Banner = () => {
   );
 };
 
-export default Banner;
+export default Banner2;

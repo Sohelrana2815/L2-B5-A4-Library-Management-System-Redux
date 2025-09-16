@@ -1,11 +1,15 @@
-import Navbar from "./Navbar";
 import { Outlet } from "react-router";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const Layout = () => {
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <Outlet />
+      <div className="flex-1">
+        <Outlet />
+      </div>
+      <Footer />
     </div>
   );
 };

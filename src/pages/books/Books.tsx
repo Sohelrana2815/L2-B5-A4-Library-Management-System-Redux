@@ -12,12 +12,14 @@ import SectionTitle from "@/components/sections/sectionTitle/SectionTitle";
 import EmailForm from "@/components/sections/emailForm/EmailForm";
 import { Button } from "@/components/ui/button";
 import Categories from "@/components/sections/bookCategory/Categories";
-import BannerCarousel from "@/components/sections/banner/BannerCarousel";
 import ReadDown from "@/components/sections/ReadDown/ReadDown";
 import ReaderChoice from "@/components/sections/readerChoice/ReaderChoice";
-import Banner from "@/components/sections/banner2/Banner";
 import PopularAuthors from "@/components/sections/popularAuthors/PopularAuthors";
-import Banner3 from "@/components/sections/banner3/Banner3";
+import Offer from "@/components/sections/offers/Offer";
+import Banner1 from "@/components/sections/banners/Banner1";
+import Banner2 from "@/components/sections/banners/Banner2";
+import Banner3 from "@/components/sections/banners/Banner3";
+
 const Books = () => {
   const { data: response, isError, isLoading } = useGetBooksQuery(undefined);
   const books = response?.data || [];
@@ -47,8 +49,8 @@ const Books = () => {
 
   return (
     <>
-      <BannerCarousel />
-      <div className="mt-56 mb-10">
+      <Banner1 />
+      <div className="mt-56">
         <SectionTitle title="Discover Your Next Book" />
       </div>
       <Toolbar selectedCount={selectedBooks.length} onDelete={handleDelete} />
@@ -61,7 +63,7 @@ const Books = () => {
 
       <div className="w-full flex my-20">
         <Button
-          className="bg-black dark:bg-green-900 mx-auto text-white rounded-none "
+          className="rounded-none bg-[#1E5128] hover:bg-[#4E9F3D] text-white hover:text-white dark:bg-[#1E5128] dark:text-white py-7 mx-auto px-10 text-base"
           size={"lg"}
         >
           Discover More Books
@@ -77,9 +79,10 @@ const Books = () => {
       <Categories />
       <ReadDown />
       <ReaderChoice />
-      <Banner />
+      <Banner2 />
       <PopularAuthors />
       <Banner3 />
+      <Offer />
       <Toaster />
     </>
   );

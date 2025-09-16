@@ -1,3 +1,4 @@
+import SectionTitle from "@/components/sections/sectionTitle/SectionTitle";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -33,47 +34,73 @@ import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router";
 
 const AddBook = () => {
-  const [createBook] = useCreateBookMutation();
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const form = useForm();
+  const [createBook, { isLoading }] = useCreateBookMutation();
+
+  const form = useForm<FieldValues>({
+    defaultValues: {
+      title: "",
+      author: "",
+      genre: "",
+      isbn: "",
+      description: "",
+      copies: 1,
+    },
+  });
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      data.copies = Number(data.copies);
-
-      const taskData = {
+      // ensure copies is a number
+      const copiesNumber = Number(data.copies) || 1;
+      const payload = {
         ...data,
+        copies: copiesNumber,
         available: true,
       };
-      await createBook(taskData).unwrap();
+
+      await createBook(payload).unwrap();
       toast.success("Book created successfully");
-      setOpen(false);
       form.reset();
-      // Optionally reset form or show success message
-      console.log("Book created:", taskData);
+      setOpen(false);
       navigate("/all-books");
-    } catch (error) {
-      console.error("Failed to create book", error);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (err: any) {
+      console.error("Failed to create book", err);
+      // if backend returns message
+      const message =
+        err?.data?.message || err?.error || "Failed to create book";
+      toast.error(message);
     }
   };
 
   return (
     <>
       <Toaster />
-      <Dialog open={open} onOpenChange={setOpen}>
-        <form>
+      <SectionTitle title="Add Book" />
+      <div className="flex justify-center mt-10 min-h-screen">
+        <Dialog open={open} onOpenChange={setOpen}>
           <DialogTrigger asChild>
-            <Button variant="outline">Add Book</Button>
+            <Button
+              variant="default"
+              className="px-6 py-3 text-lg font-medium rounded-xl shadow-md hover:shadow-lg transition-all"
+            >
+              + Add Book
+            </Button>
           </DialogTrigger>
+
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
               <DialogTitle>Add book</DialogTitle>
             </DialogHeader>
+
             <DialogDescription className="sr-only">
-              Addfsda sdafasdfsdf
+              Open the form to add a new book
             </DialogDescription>
+
+            {/* hook up react-hook-form wrapper */}
             <Form {...form}>
+              {/* single native form element (only one) */}
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-5"
@@ -82,20 +109,22 @@ const AddBook = () => {
                 <FormField
                   control={form.control}
                   name="title"
+                  rules={{ required: "Title is required" }}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Title</FormLabel>
-                      <FormLabel />
                       <FormControl>
                         <Input {...field} value={field.value || ""} />
                       </FormControl>
                     </FormItem>
                   )}
                 />
+
                 {/* Author */}
                 <FormField
                   control={form.control}
                   name="author"
+                  rules={{ required: "Author is required" }}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Author</FormLabel>
@@ -105,6 +134,7 @@ const AddBook = () => {
                     </FormItem>
                   )}
                 />
+
                 {/* Genre */}
                 <FormField
                   control={form.control}
@@ -113,18 +143,20 @@ const AddBook = () => {
                     <FormItem className="w-full">
                       <FormLabel>Genre</FormLabel>
                       <Select
-                        onValueChange={field.onChange}
+                        onValueChange={(val) => field.onChange(val)}
                         defaultValue={field.value || ""}
+                        value={field.value || ""}
                       >
                         <FormControl>
                           <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a verified email to display" />
+                            <SelectValue placeholder="Select a genre" />
                           </SelectTrigger>
                         </FormControl>
+
                         <SelectContent>
-                          {genres.map((genre) => (
-                            <SelectItem key={genre} value={genre}>
-                              {genre.charAt(0) + genre.slice(1).toLowerCase()}
+                          {genres.map((g) => (
+                            <SelectItem key={g} value={g}>
+                              {g.charAt(0) + g.slice(1).toLowerCase()}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -132,6 +164,7 @@ const AddBook = () => {
                     </FormItem>
                   )}
                 />
+
                 {/* ISBN */}
                 <FormField
                   control={form.control}
@@ -145,6 +178,7 @@ const AddBook = () => {
                     </FormItem>
                   )}
                 />
+
                 {/* Description */}
                 <FormField
                   control={form.control}
@@ -162,6 +196,7 @@ const AddBook = () => {
                     </FormItem>
                   )}
                 />
+
                 {/* Copies */}
                 <FormField
                   control={form.control}
@@ -173,24 +208,28 @@ const AddBook = () => {
                         <Input
                           {...field}
                           type="number"
-                          value={field.value || ""}
+                          value={field.value || 1}
                           min={1}
                         />
                       </FormControl>
                     </FormItem>
                   )}
                 />
+
                 <DialogFooter>
                   <DialogClose asChild>
                     <Button variant="outline">Cancel</Button>
                   </DialogClose>
-                  <Button type="submit">Save changes</Button>
+
+                  <Button type="submit" disabled={isLoading}>
+                    {isLoading ? "Saving..." : "Save changes"}
+                  </Button>
                 </DialogFooter>
               </form>
             </Form>
           </DialogContent>
-        </form>
-      </Dialog>
+        </Dialog>
+      </div>
     </>
   );
 };

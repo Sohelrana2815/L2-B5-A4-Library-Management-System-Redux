@@ -17,7 +17,7 @@ export const SectionTitle: React.FC<SectionTitleProps> = ({ title }) => {
 
 const EmailForm: React.FC = () => {
   return (
-    <section className="bg-[#d83a43] py-20">
+    <section className="bg-[#1E5128] py-20">
       <div className="max-w-4xl mx-auto px-6">
         <SectionTitle title={"Stay in Touch with Our Updates"} />
 
