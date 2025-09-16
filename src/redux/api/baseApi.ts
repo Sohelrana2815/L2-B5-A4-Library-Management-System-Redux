@@ -21,7 +21,7 @@ export const baseApi = createApi({
     getBookById: builder.query<Book, string>({
       query: (id) => `/books/${id}`,
       transformResponse: (response: ApiResponse<Book>) => response.data,
-      providesTags: (result, error, id) => [{ type: "books", id }],
+      providesTags: (_result, _error, id) => [{ type: "books", id }],
     }),
     createBook: builder.mutation({
       query: (taskData) => ({
