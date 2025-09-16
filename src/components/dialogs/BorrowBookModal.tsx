@@ -44,6 +44,8 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
 
   const navigate = useNavigate();
 
+  const defaultDate = new Date(new Date().getTime() + 120000);
+
   const form = useForm<Borrow>({
     defaultValues: {
       book: {
@@ -51,7 +53,7 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
         isbn: book.isbn,
       },
       totalQuantity: 1,
-      dueDate: new Date(),
+      dueDate: defaultDate,
     },
   });
   const onSubmit: SubmitHandler<Borrow> = async (data) => {
@@ -85,7 +87,7 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
             <DialogTitle>Borrow books</DialogTitle>
           </DialogHeader>
           <DialogDescription className="sr-only">
-            Addfsda sdafasdfsdf
+            Borrow Your favorite book
           </DialogDescription>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
@@ -93,6 +95,7 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
               <FormField
                 control={form.control}
                 name="totalQuantity"
+                rules={{ required: "Must be borrow at least a book" }}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Quantity</FormLabel>
@@ -104,6 +107,7 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
                         min={1}
                       />
                     </FormControl>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -138,9 +142,9 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          // disabled={(date) =>
-                          //   date > new Date() || date < new Date("1900-01-01")
-                          // }
+                          disabled={(date) =>
+                            date < new Date(new Date().getTime() + 120000)
+                          }
                           captionLayout="dropdown"
                         />
                       </PopoverContent>
@@ -162,7 +166,9 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
           </Form>
         </DialogContent>
       </Dialog>
-      <Toaster />
+      <div>
+        <Toaster />
+      </div>
     </>
   );
 };

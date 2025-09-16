@@ -15,6 +15,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage, // Make sure FormMessage is imported
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
@@ -36,7 +37,9 @@ import { useNavigate } from "react-router";
 const AddBook = () => {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const [createBook, { isLoading }] = useCreateBookMutation();
+  const [createBook, { isLoading, isError, error }] = useCreateBookMutation();
+
+  console.log({ isLoading, isError, error });
 
   const form = useForm<FieldValues>({
     defaultValues: {
@@ -67,6 +70,9 @@ const AddBook = () => {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Failed to create book", err);
+      if (err?.status === 409) {
+        return toast.error("ISBN must be unique");
+      }
       // if backend returns message
       const message =
         err?.data?.message || err?.error || "Failed to create book";
@@ -76,7 +82,6 @@ const AddBook = () => {
 
   return (
     <>
-      <Toaster />
       <SectionTitle title="Add Book" />
       <div className="flex justify-center mt-10 min-h-screen">
         <Dialog open={open} onOpenChange={setOpen}>
@@ -98,9 +103,7 @@ const AddBook = () => {
               Open the form to add a new book
             </DialogDescription>
 
-            {/* hook up react-hook-form wrapper */}
             <Form {...form}>
-              {/* single native form element (only one) */}
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="space-y-5"
@@ -109,13 +112,24 @@ const AddBook = () => {
                 <FormField
                   control={form.control}
                   name="title"
-                  rules={{ required: "Title is required" }}
+                  rules={{
+                    required: "Title is required",
+                    minLength: {
+                      value: 10,
+                      message: "Title must be at least 10 characters",
+                    },
+                    maxLength: {
+                      value: 50,
+                      message: "Title cannot exceed 50 characters",
+                    },
+                  }}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Title</FormLabel>
                       <FormControl>
                         <Input {...field} value={field.value || ""} />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -124,13 +138,24 @@ const AddBook = () => {
                 <FormField
                   control={form.control}
                   name="author"
-                  rules={{ required: "Author is required" }}
+                  rules={{
+                    required: "Author is required",
+                    minLength: {
+                      value: 5,
+                      message: "Author must be at least 5 characters",
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: "Author cannot exceed 20 characters",
+                    },
+                  }}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Author</FormLabel>
                       <FormControl>
                         <Input {...field} value={field.value || ""} />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -139,6 +164,7 @@ const AddBook = () => {
                 <FormField
                   control={form.control}
                   name="genre"
+                  rules={{ required: "Genre is required" }} // Added validation for genre
                   render={({ field }) => (
                     <FormItem className="w-full">
                       <FormLabel>Genre</FormLabel>
@@ -161,6 +187,7 @@ const AddBook = () => {
                           ))}
                         </SelectContent>
                       </Select>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -169,12 +196,14 @@ const AddBook = () => {
                 <FormField
                   control={form.control}
                   name="isbn"
+                  rules={{ required: "ISBN is required and must be unique" }}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>ISBN</FormLabel>
                       <FormControl>
                         <Input {...field} value={field.value || ""} />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -201,6 +230,13 @@ const AddBook = () => {
                 <FormField
                   control={form.control}
                   name="copies"
+                  rules={{
+                    required: "Copies is required",
+                    min: {
+                      value: 1,
+                      message: "Copies must be at least 1",
+                    },
+                  }}
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Copies</FormLabel>
@@ -212,6 +248,7 @@ const AddBook = () => {
                           min={1}
                         />
                       </FormControl>
+                      <FormMessage />
                     </FormItem>
                   )}
                 />
@@ -229,6 +266,7 @@ const AddBook = () => {
             </Form>
           </DialogContent>
         </Dialog>
+        <Toaster />
       </div>
     </>
   );
