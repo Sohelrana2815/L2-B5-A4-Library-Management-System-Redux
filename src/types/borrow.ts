@@ -1,5 +1,8 @@
 export interface Borrow {
-  book: string;
-  quantity: number;
+  book: {
+    title: string;
+    isbn: string;
+  };
+  totalQuantity: number;
   dueDate: Date;
 }

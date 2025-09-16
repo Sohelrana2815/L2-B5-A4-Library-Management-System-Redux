@@ -3,6 +3,7 @@ import SectionTitle from "../sectionTitle/SectionTitle";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import "./book-cover.css";
+import type { Borrow } from "@/types/borrow";
 const bookCoverImages = [
   "/book-covers/book-cover1.jpg",
   "/book-covers/book-cover2.jpg",
@@ -29,7 +30,7 @@ const ReaderChoice = () => {
     <>
       <SectionTitle title="Picked by Readers" />
       <div className=" grid grid-cols-1 md:grid-cols-3 gap-4 p-3 max-w-4/5 mx-auto">
-        {borrowedBooks.map((borrowedBook, index) => {
+        {borrowedBooks.map((borrowedBook: Borrow, index: number) => {
           // Use the modulo operator (%) to cycle through the available book covers.
           // This ensures that each book gets a different cover from the array,
           // and if there are more books than covers, it will start reusing them.
