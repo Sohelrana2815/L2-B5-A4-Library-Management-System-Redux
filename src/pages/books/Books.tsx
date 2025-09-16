@@ -8,7 +8,6 @@ import { DataTable } from "@/components/books-table/data-table";
 import Toolbar from "@/components/toolbar/Toolbar";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import SectionTitle from "@/components/sections/sectionTitle/SectionTitle";
 import EmailForm from "@/components/sections/emailForm/EmailForm";
 import { Button } from "@/components/ui/button";
 import Categories from "@/components/sections/bookCategory/Categories";
@@ -19,6 +18,7 @@ import Offer from "@/components/sections/offers/Offer";
 import Banner1 from "@/components/sections/banners/Banner1";
 import Banner2 from "@/components/sections/banners/Banner2";
 import Banner3 from "@/components/sections/banners/Banner3";
+import SectionTitle from "@/components/sections/sectionTitle/SectionTitle";
 
 const Books = () => {
   const { data: response, isError, isLoading } = useGetBooksQuery(undefined);
