@@ -8,7 +8,7 @@ interface ApiResponse<T> {
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://library-management-api-flame.vercel.app/api",
+    baseUrl: "http://localhost:5000/api",
   }),
   tagTypes: ["books", "borrow"],
   endpoints: (builder) => ({
