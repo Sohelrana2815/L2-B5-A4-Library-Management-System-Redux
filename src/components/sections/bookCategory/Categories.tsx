@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { genres } from "@/constant/genre";
-import { useGetBooksQuery } from "@/redux/api/baseApi";
 
 const bookImages = [
   {
@@ -37,9 +36,6 @@ const bookImages = [
 ];
 
 const Categories = () => {
-  const { data: response, isError, isLoading } = useGetBooksQuery(undefined);
-  const books = response?.data || [];
-
   return (
     <>
       <div className="xl:max-w-4/5 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
