@@ -76,8 +76,6 @@ The application will then be accessible via your web browser, typically at `http
 ## 🔗 Repository Links
 
   * **Frontend GitHub Repository:** [https://github.com/Sohelrana2815/L2-B5-A4-Library-Management-System-Redux](https://github.com/Sohelrana2815/L2-B5-A4-Library-Management-System-Redux)
-<<<<<<< HEAD
+
   * **Backend GitHub Repository:** [https://github.com/Sohelrana2815/L2-B5-A3-LIBRARY-MANAGEMENT-API](https://github.com/Sohelrana2815/L2-B5-A3-LIBRARY-MANAGEMENT-API)
-=======
-  * **Backend GitHub Repository:** [https://github.com/Sohelrana2815/L2-B5-A3-LIBRARY-MANAGEMENT-API](https://github.com/Sohelrana2815/L2-B5-A3-LIBRARY-MANAGEMENT-API)
->>>>>>> 84d6cfe1574dfc9924ba3bcc14a465219391ada4
+
