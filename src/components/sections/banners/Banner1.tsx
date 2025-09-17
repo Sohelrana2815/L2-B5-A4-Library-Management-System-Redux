@@ -19,14 +19,14 @@ const Banner1 = () => {
           src={banner1}
           className="h-40 sm:h-60 md:h-[600px] lg:h-[700px] xl:h-[800px] w-full object-cover"
         />
-        <p className="legend">Legend 1</p>
+        <p className="legend">Book 1</p>
       </div>
       <div>
         <img
           src={banner2}
           className="h-40 sm:h-60 md:h-[600px] lg:h-[700px]   xl:h-[800px] w-full object-cover"
         />
-        <p className="legend">Legend 2</p>
+        <p className="legend">Book 2</p>
       </div>
     </Carousel>
   );

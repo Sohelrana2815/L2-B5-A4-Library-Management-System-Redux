@@ -44,7 +44,7 @@ const BorrowBookModal = ({ book, trigger }: BorrowBookModalProps) => {
 
   const navigate = useNavigate();
 
-  const defaultDate = new Date(new Date().getTime() + 120000);
+  const defaultDate = new Date(new Date().getTime() + 30000);
 
   const form = useForm<Borrow>({
     defaultValues: {
